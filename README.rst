@@ -68,8 +68,7 @@ The steps here assume that you have a Debian/Ubuntu distribution:
    `steroids dynamic analysis <https://github.com/cesaro/steroids>`__
    library::
 
-   cd steroids
-   make
+   cd steroids; make
 
 4. (Optional) Edit the file `<config.mk>`__. Update the value of the variable
    ``CONFIG_STEROIDS_ROOT`` to point to the root of the steroids project.
