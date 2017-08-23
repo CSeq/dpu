@@ -1,7 +1,6 @@
 #!/bin/sh
 
 # settings
-LLVMVERS=3.7
 PREFIX=$(readlink -f $(dirname $(readlink -f "$0")))/..
 RT=$PREFIX/lib/dpu/rt.bc
 BACKEND=$PREFIX/lib/dpu/dpu-backend
@@ -46,24 +45,24 @@ main_ ()
 
    # prepare the input
    if echo "$INPUT" | grep -q '\.c$\|\.i$'; then
-      CMD="clang-$LLVMVERS -D__DPU__ $DEFS -O3 -emit-llvm -c -o ${TMP}.opt.bc -- '$INPUT'"
+      CMD="clang -D__DPU__ $DEFS -O3 -emit-llvm -c -o ${TMP}.opt.bc -- '$INPUT'"
       echo $CMD
       eval $CMD
       stopif "clang"
    else
-      CMD="opt-$LLVMVERS -mem2reg '$INPUT' -o ${TMP}.opt.bc"
+      CMD="opt -mem2reg '$INPUT' -o ${TMP}.opt.bc"
       echo $CMD
       eval $CMD
       stopif "opt"
    fi
-   CMD="llvm-link-$LLVMVERS ${TMP}.opt.bc $RT -o ${TMP}.bc"
+   CMD="llvm-link ${TMP}.opt.bc $RT -o ${TMP}.bc"
    echo $CMD
    eval $CMD
    stopif "llvm-link"
 
    # dump .bc files, for debugging purposes
-   #llvm-dis-$LLVMVERS ${TMP}.opt.bc -o ${TMP}.opt.ll
-   #llvm-dis-$LLVMVERS ${TMP}.bc -o ${TMP}.ll
+   #llvm-dis ${TMP}.opt.bc -o ${TMP}.opt.ll
+   #llvm-dis ${TMP}.bc -o ${TMP}.ll
 
    # run the backend analyzer
    if test $GDB = 1; then

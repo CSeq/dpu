@@ -18,3 +18,4 @@ dot/*.png
 tags
 benchmarks/basic/*.ll
 config.h
+dist/

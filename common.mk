@@ -56,11 +56,11 @@ TARGETS ?= $(MOBJS:.o=)
 include $R/config.mk
 
 # == llvm ==
-#LLVMCXXFLAGS := -I$(shell llvm-config-$(CONFIG_LLVM_VER) --includedir)
-LLVMCXXFLAGS := $(shell llvm-config-$(CONFIG_LLVM_VER) --cppflags)
-LLVMLDFLAGS := $(shell llvm-config-$(CONFIG_LLVM_VER) --ldflags)
-#LLVMLIBS := $(shell llvm-config-$(CONFIG_LLVM_VER) --libs --system-libs)
-LLVMLIBS := $(shell llvm-config-$(CONFIG_LLVM_VER) --libs all) -lz -lpthread -lffi -lncurses -ldl -lm
+#LLVMCXXFLAGS := -I$(shell llvm-config --includedir)
+LLVMCXXFLAGS := $(shell llvm-config --cppflags)
+LLVMLDFLAGS := $(shell llvm-config --ldflags)
+#LLVMLIBS := $(shell llvm-config --libs --system-libs)
+LLVMLIBS := $(shell llvm-config --libs all) -lz -lpthread -lffi -lncurses -ldl -lm
 
 # == steroids ==
 STIDCPPFLAGS := -I $(CONFIG_STEROIDS_ROOT)/include/
@@ -82,11 +82,10 @@ LDFLAGS = $(LLVMLDFLAGS) $(STIDLDFLAGS) # -dead_strip -static
 LDLIBS = $(LIBS) $(STIDLDLIBS) $(LLVMLIBS)
 
 # define the toolchain
-LLVMVERS:=-3.7
-LD := ld$(LLVMVERS)
-CC := clang$(LLVMVERS)
-CXX := clang++$(LLVMVERS)
-CPP := cpp$(LLVMVERS)
+LD := ld
+CC := clang
+CXX := clang++
+CPP := cpp
 LEX := flex
 YACC := bison
 
@@ -160,18 +159,18 @@ CXXFLAGS_:=-Wall -Wextra -std=c++11 -O3
 %.bc : %.cc
 	$(CXX) $(CXXFLAGS_) -c -flto $< -o $@
 %.bc : %.ll
-	llvm-as-$(CONFIG_LLVM_VER) $< -o $@
+	llvm-as $< -o $@
 %.ll : %.bc
-	llvm-dis-$(CONFIG_LLVM_VER) $< -o $@
+	llvm-dis $< -o $@
 %.s : %.bc
-	llc-$(CONFIG_LLVM_VER) $< -o $@
+	llc $< -o $@
 
 compile: $(TARGETS)
 
 $(TARGETS) : % : %.o $(OBJS) $(LIBS)
 	@echo "LD  $@"
 	@$(LINK.cc)
-    
+
 vars :
 	@echo "R          $R"
 	@echo "D          $D"

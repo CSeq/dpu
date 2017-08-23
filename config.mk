@@ -13,10 +13,9 @@ CONFIG_VERSION = v0.3.0
 CONFIG_PREFIX = ~/x/local
 
 # LLVM version
-CONFIG_LLVM_VER = 3.7
 
 # location of the steroids project
-CONFIG_STEROIDS_ROOT = $R/../steroids
+CONFIG_STEROIDS_ROOT = $R/steroids
 
 # maximum number of unfolding processes
 CONFIG_MAX_PROCESSES = 32

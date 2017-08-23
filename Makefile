@@ -29,7 +29,7 @@ dist : compile $(CONFIG_STEROIDS_ROOT)/rt/rt.bc
 	mkdir dist/bin
 	mkdir dist/lib
 	mkdir dist/lib/dpu
-	
+
 	cp src/driver.sh dist/bin/dpu
 	cp src/main dist/lib/dpu/dpu-backend
 	cp $(CONFIG_STEROIDS_ROOT)/rt/rt.bc dist/lib/dpu/
@@ -46,7 +46,7 @@ run2: dist
 	make u.svg
 
 tags :
-	ctags -R --c++-kinds=+p --fields=+K --extra=+q src/ tests/unit/ config.h $(shell llvm-config$(LLVMVERS) --includedir)
+	ctags -R --c++-kinds=+p --fields=+K --extra=+q src/ tests/unit/ config.h $(shell llvm-config --includedir)
 
 g gdb : dist
 	./dist/bin/dpu benchmarks/basic/cjlu.c -vv --gdb -- p main3

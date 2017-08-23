@@ -58,18 +58,21 @@ The steps here assume that you have a Debian/Ubuntu distribution:
 
 2. Install clang v3.7 and LLVM v3.7. DPU currently does not compile under g++,
    and you will need clang 3.7 to run the tool, anyway::
-   
+
     sudo apt-get install llvm-3.7-dev clang-3.7
 
    After the installation, the command ``llvm-config-3.7`` should be in your
    ``PATH``, and typing ``llvm-config-3.7 --prefix`` should print the
    installation path of LLVM 3.7.
 
-3. Download and compile the
+3. Compile the
    `steroids dynamic analysis <https://github.com/cesaro/steroids>`__
-   library.
+   library::
 
-4. Edit the file `<config.mk>`__. Update the value of the variable
+   cd steroids
+   make
+
+4. (Optional) Edit the file `<config.mk>`__. Update the value of the variable
    ``CONFIG_STEROIDS_ROOT`` to point to the root of the steroids project.
    Give an absolute path or a path relative to the variable ``$R``,
    which will equal to the path of the root folder of the DPU project.
@@ -120,7 +123,7 @@ Related tools
 Contact
 =======
 
-DPU is currently maintained by 
+DPU is currently maintained by
 `César Rodríguez <http://lipn.univ-paris13.fr/~rodriguez/>`__.
 Please feel free to contact me in case of questions or to send feedback.
 

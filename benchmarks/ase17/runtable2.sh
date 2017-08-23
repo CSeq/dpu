@@ -26,14 +26,13 @@ compile_bench ()
 {
    # setup for Whole Program LLVM
    CC=wllvm
-   LLVMVERS=3.7
    export LLVM_COMPILER=clang
-   export LLVM_CC_NAME=clang-$LLVMVERS
-   export LLVM_CXX_NAME=clang++-$LLVMVERS
-   export LLVM_LINK_NAME=llvm-link-$LLVMVERS
-   export LLVM_AR_NAME=llvm-ar-$LLVMVERS
+   export LLVM_CC_NAME=clang
+   export LLVM_CXX_NAME=clang++
+   export LLVM_LINK_NAME=llvm-link
+   export LLVM_AR_NAME=llvm-ar
 
-   # package mafft 
+   # package mafft
    MAFFTPROGS="addsingle dndpre makedirectionlist mccaskillwrap pairlocalalign"
    P="$R/debian/mafft-7.123/core/"
    make -C $P $MAFFTPROGS CC=$CC
